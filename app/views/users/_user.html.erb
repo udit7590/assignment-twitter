@@ -1,0 +1,10 @@
+<% if user.present? %>
+  <div class="user">
+    <p>User: <%= user.email %></p>
+    <% unless current_user.following?(user) %>
+      <%= link_to 'Follow', user_follows_path(user_id: user.id), method: :post %>
+    <% else %>
+      <%= link_to 'Unfollow', user_follows_path(user_id: user.id), method: :delete %>
+    <% end %>
+  </div>
+<% end %>

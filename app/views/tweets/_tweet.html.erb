@@ -1,0 +1,6 @@
+<% if tweet.persisted? %>
+  <div class="tweet">
+    <p>User: <%= tweet.user.email %></p>
+    <p>Tweeted: <%= tweet.content %></p>
+  </div>
+<% end %>

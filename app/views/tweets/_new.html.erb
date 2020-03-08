@@ -1,0 +1,4 @@
+<%= form_for current_user.tweets.new, method: :post, url: user_tweets_path(current_user) do |f| %>
+  Tweet: <%= f.text_area :content %><br />
+  <%= f.submit %>
+<% end %>

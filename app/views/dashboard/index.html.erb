@@ -1,0 +1,24 @@
+<%= render 'shared/messages' %>
+
+<h1>Me:</h1>
+<p>User: <%= current_user.email %></p>
+
+<%= render 'tweets/new' %>
+
+<hr />
+
+<div class='users'>
+  <h1>Users:</h1>
+  <% @users.each do |user| %>
+    <%= render partial: 'users/user', locals: { user: user } %>
+  <% end %>
+</div>
+
+<hr />
+
+<div class='tweets'>
+  <h1>Tweets:</h1>
+  <% @tweets.each do |tweet| %>
+    <%= render partial: 'tweets/tweet', locals: { tweet: tweet } %>
+  <% end %>
+</div>
