@@ -12,9 +12,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      get 'tweets/me', 'api/v1/tweets#me'
+      get 'users/me', 'api/v1/users#me'
       resources :users, only: :show do
         resources :tweets, only: :index
-        resources :follows
+        resources :follows, only: [:create] do
+          delete :destroy, on: :collection
+        end
       end
     end
   end

@@ -8,11 +8,11 @@ module Api::Response
   end
 
   def error_response(
-    status_code = 400,
     message = 'Something is wrong with the parameters or the request itself',
-    status = 'Error'
+    status = 400,
+    error_category = 'Error'
   )
-    render json: response_with_message(status, message), status: status_code
+    render json: response_with_message(error_category || 'Error', message), status: status
   end
 
   def successful_response(message, status = :ok)

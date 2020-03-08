@@ -1,5 +1,4 @@
 module Api
-  #:nodoc:
   class ApiController < ApplicationController
     include Api::Response
 
@@ -10,24 +9,26 @@ module Api
 
     before_action :authenticate_client!
 
-    def authenticate_user!
+    def authenticate_client!
       return if current_user.present?
 
-      error_response(:unauthorized, 'Incorrect access token', 'invalid_grant')
+      error_response('Incorrect access token', :unauthorized, 'invalid_grant')
     end
 
     def current_user
       return @current_user if @current_user.present?
 
-      return nil if api_token.blank?
+      return nil if basic_auth.blank?
 
-      @current_user = User.find_by(email: api_token)
+      user = User.find_by(email: basic_auth[0])
+      (@current_user = user) if user.valid_password?(basic_auth[1])
     end
 
     private
 
-    def api_token
-      request.env['HTTP_AUTHORIZATION'].to_s.split(' ').last
+    # [email, password]
+    def basic_auth
+      @auth ||= ::Base64.decode64(request.authorization.split(' ', 2).last || '').split(/:/, 2)
     end
   end
 end

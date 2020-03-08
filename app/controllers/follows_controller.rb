@@ -13,7 +13,7 @@ class FollowsController < ApplicationController
   # Unfollow
   def destroy
     if current_user.unfollow(user)
-      redirect_to root_path, alert: 'Unfollowing now', status: 202
+      redirect_to root_path, alert: 'Unfollowing now', status: 200
     else
       redirect_to root_path, alert: 'Unable to unfollow', status: 422
     end

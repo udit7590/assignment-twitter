@@ -1,15 +1,10 @@
 module Api
   module V1
     class TweetsController < Api::ApiController
-      before_action :set_default, only: :create
-
-      def create
-        run ReviewRequest::Create do |result|
-          return successful_post(result['model'].id)
-        end
-
-        unprocessable_entity
+      def me
+        @tweets = current_user.tweets_from_follows
+        render json: @tweets
       end
-
+    end
   end
 end
